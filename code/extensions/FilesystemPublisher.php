@@ -1,4 +1,7 @@
 <?php
+
+use Wa72\HtmlPrettymin\PrettyMin;
+
 /**
  * @package staticpublisher
  */
@@ -309,11 +312,12 @@ class FilesystemPublisher extends StaticPublisher
                 );
             }
 
-            // Minify Html content ---------------------------------------------------
-            require_once(__DIR__ . '/../../tiny-html-minifier/tiny-html-minifier.php');
-            $content = TinyMinify::html($content, $options = [
-                'collapse_whitespace' => false
-            ]); // -------------------------------------------------------------------
+            // Minify Html content -------------------------
+            $prettyMin = new PrettyMin();
+            $content = $prettyMin->load($content)
+                                 ->minify()
+                                 ->saveHtml();
+            // ---------------------------------------------
 
             if (!$isErrorPage) {
                 $files[$origUrl] = array(

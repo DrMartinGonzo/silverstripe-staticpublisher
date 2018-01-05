@@ -11,6 +11,7 @@
 		"email": "sam@silverstripe.com"
 	}],
 	"require": {
-		"silverstripe/cms": "~3.1"
+		"silverstripe/cms": "~3.1",
+		"wa72/html-pretty-min": "^0.1.4"
 	}
 }
