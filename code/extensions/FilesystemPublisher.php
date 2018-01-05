@@ -313,10 +313,12 @@ class FilesystemPublisher extends StaticPublisher
             }
 
             // Minify Html content -------------------------
+            libxml_use_internal_errors(true); // disable error reporting on html5 tags
             $prettyMin = new PrettyMin();
             $content = $prettyMin->load($content)
                                  ->minify()
                                  ->saveHtml();
+            libxml_clear_errors();
             // ---------------------------------------------
 
             if (!$isErrorPage) {
