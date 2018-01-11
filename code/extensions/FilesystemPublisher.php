@@ -314,7 +314,24 @@ class FilesystemPublisher extends StaticPublisher
 
             // Minify Html content -------------------------
             libxml_use_internal_errors(true); // disable error reporting on html5 tags
-            $prettyMin = new PrettyMin();
+
+            $prettyMin_options = array(
+                'minify_js' => false,
+                'minify_css' => true,
+                'remove_comments' => false,
+                'remove_comments_exeptions' => ['/^\[if /'],
+                'keep_whitespace_around' => [
+                    // keep whitespace around inline elements
+                    'b', 'big', 'i', 'small', 'tt',
+                    'abbr', 'acronym', 'cite', 'code', 'dfn', 'em', 'kbd', 'strong', 'samp', 'var',
+                    'a', 'bdo', 'br', 'img', 'map', 'object', 'q', 'span', 'sub', 'sup',
+                    'button', 'input', 'label', 'select', 'textarea'
+                ],
+                'keep_whitespace_in' => ['script', 'style', 'pre'],
+                'remove_empty_attributes' => ['style', 'class'],
+                'indent_characters' => "\t"
+            );
+            $prettyMin = new PrettyMin($prettyMin_options);
             $content = $prettyMin->load($content)
                                  ->minify()
                                  ->saveHtml();
